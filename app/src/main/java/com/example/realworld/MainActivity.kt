@@ -48,6 +48,10 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.SearchBar
 
 class MainActivity : ComponentActivity() {
@@ -56,16 +60,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RealWorldTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+               MySootheAppPortrait()
             }
         }
     }
 }
+
+
 
 @Composable
 fun HomeSection(
@@ -282,17 +283,69 @@ private data class DrawableStringPair(
 )
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
+private fun SootheBottomNavigation(modifier: Modifier = Modifier){
+    NavigationBar (
+        containerColor = MaterialTheme.colorScheme.surfaceVariant,
         modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    RealWorldTheme {
-        Greeting("Android")
+    ) {
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Home,
+                    contentDescription = null
+                )
+            },
+            label = {
+                Text(
+                    text = stringResource(R.string.bottom_navigation_home)
+                )
+            },
+            selected = true,
+            onClick = {}
+        )
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = null
+                )
+            },
+            label = {
+                Text(
+                    text = stringResource(R.string.bottom_navigation_profile)
+                )
+            },
+            selected = false,
+            onClick = {}
+        )
     }
 }
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+fun SootheBottomNavigationPreview() {
+    RealWorldTheme {
+        SootheBottomNavigation()
+    }
+}
+
+
+@Composable
+fun MySootheAppPortrait(){
+    RealWorldTheme {
+        Scaffold (
+            bottomBar = { SootheBottomNavigation() }
+        ) { padding ->
+            HomeScreen(Modifier.padding(padding))
+        }
+    }
+}
+
+@Preview
+@Composable
+fun MySootheAppPortraitPreview() {
+    RealWorldTheme {
+        MySootheAppPortrait()
+    }
+}
+
